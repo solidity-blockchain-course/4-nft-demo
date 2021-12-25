@@ -1,0 +1,6 @@
+{
+  "name": "shiba-inu",
+  "description": "Collectible of breed shiba-inu",
+  "image": "https://ipfs.io/ipfs/QmYx6GsYAKnNzZ9A6NvEKV9nf1VaDzJrqDR23Y8YSkebLU",
+  "attributes": [{ "height": 100 }, { "color": "gray" }]
+}

@@ -1,5 +1,7 @@
 from brownie import network, accounts, config, LinkToken, VRFCoordinatorMock, Contract
 from web3 import Web3
+import requests
+from pathlib import Path
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["hardhat", "development", "ganache", "mainnet-fork"]
 
@@ -50,3 +52,24 @@ def fund_with_link(sender, recipient_address, amount=Web3.toWei(0.1, "ether")):
     transfer_tx = link.transfer(recipient_address, amount, {"from": sender})
     transfer_tx.wait(1)
     print(f"{Web3.fromWei(amount, 'ether')} LINK transfered to {recipient_address}")
+
+
+breeds = ["PUG", "SHIBA_INU", "ST_BERNARD"]
+
+
+def get_formatted_breed(index):
+    return breeds[index].replace("_", "-").lower().strip()
+
+
+def upload_to_ipfs(path):
+    url = "http://127.0.0.1:5001/api/v0/add"
+    with open(path, "rb") as binary_file:
+        files = {"file": binary_file.read()}
+        response = requests.post(url, files=files)
+        response.raise_for_status()
+        response_data = response.json()
+        print(response_data)
+        file_hash = response_data["Hash"]
+        img_ipfs_url = f"https://ipfs.io/ipfs/{file_hash}"
+        print(f"Newply uploaded file here: {img_ipfs_url}")
+        return img_ipfs_url
